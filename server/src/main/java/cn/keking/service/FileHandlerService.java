@@ -457,7 +457,13 @@ public class FileHandlerService implements InitializingBean {
         String originFileName; //原始文件名
         String outFilePath; //生成文件的路径
         String originFilePath; //原始文件路径
-        String fullFileName = WebUtils.getUrlParameterReg(url, "fullfilename");
+        // start 2025-04-02
+        CustomerRequestFilter.doCustomerFilter(req);
+        String fullFileName = CustomerRequestFilter.getFileNameFromRequest(req);
+        if(!StringUtils.hasText(fullFileName)){
+            fullFileName = WebUtils.getUrlParameterReg(url, "fullfilename");
+        }
+        // end
         String compressFileKey = WebUtils.getUrlParameterReg(url, "kkCompressfileKey"); //压缩包获取文件名
         String compressFilePath = WebUtils.getUrlParameterReg(url, "kkCompressfilepath"); //压缩包获取文件路径
         if (StringUtils.hasText(fullFileName)) {
