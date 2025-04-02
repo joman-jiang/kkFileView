@@ -458,7 +458,6 @@ public class FileHandlerService implements InitializingBean {
         String outFilePath; //生成文件的路径
         String originFilePath; //原始文件路径
         // start 2025-04-02
-        CustomerRequestFilter.doCustomerFilter(req);
         String fullFileName = CustomerRequestFilter.getFileNameFromRequest(req);
         if(!StringUtils.hasText(fullFileName)){
             fullFileName = WebUtils.getUrlParameterReg(url, "fullfilename");

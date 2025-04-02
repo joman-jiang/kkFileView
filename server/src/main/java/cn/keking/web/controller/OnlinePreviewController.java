@@ -1,6 +1,7 @@
 package cn.keking.web.controller;
 
 import cn.keking.model.FileAttribute;
+import cn.keking.service.CustomerRequestFilter;
 import cn.keking.service.FileHandlerService;
 import cn.keking.service.FilePreview;
 import cn.keking.service.FilePreviewFactory;
@@ -73,6 +74,14 @@ public class OnlinePreviewController {
             String errorMsg = String.format(BASE64_DECODE_ERROR_MSG, "url");
             return otherFilePreview.notSupportedFile(model, errorMsg);
         }
+        // 2025-04-02 start
+        try{
+            CustomerRequestFilter.doCustomerFilter(fileUrl,req);
+        }catch (Exception ex){
+            String errorMsg = "错误的参数内容，请检查url或extra";
+            return otherFilePreview.notSupportedFile(model, errorMsg);
+        }
+        // 2025-04-02 end
         FileAttribute fileAttribute = fileHandlerService.getFileAttribute(fileUrl, req);  //这里不在进行URL 处理了
         model.addAttribute("file", fileAttribute);
         FilePreview filePreview = previewFactory.get(fileAttribute);
