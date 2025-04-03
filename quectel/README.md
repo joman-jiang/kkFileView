@@ -18,7 +18,13 @@ docker 部署
 本地打包，执行Dockerfile构建运行镜像即可
 ```
 
-## 二、修改内容
+## 二、升级
+### 1、添加远程源进行更新
+git remote add github https://github.com/joman-jiang/kkFileView.git
+git fetch
+git pull origin github
+
+## 三、修改内容
 - 1、个性化关键字修改 2025-04-02
 - 2、修正s3存储url无法下载问题 && 增加自定义字段加密，实现水印功能 2025-04-02
 
