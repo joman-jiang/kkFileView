@@ -32,7 +32,7 @@
 </head>
 <body>
 <div style="display: flex;width: 100%;height: 100%;overflow: hidden">
-    <div class="zTreeDemoBackground left" style="flex: 1;width: 100%">
+    <div id="menus" class="zTreeDemoBackground left" style="flex: 1;width: 100%">
         <#--<h1>kkFileView</h1>-->
         <ul id="treeDemo" class="ztree"></ul>
     </div>
@@ -43,6 +43,49 @@
             src="">
     </iframe>
 </div>
+<script>
+    /**
+     * 初始化水印
+     */
+    function initWaterMarkThisPage() {
+        let watermarkTxt = '${watermarkTxt}';
+        if (watermarkTxt === '') {
+            return;
+        }
+        let lastWidth = 0;
+        let lastHeight = 0;
+        const checkResize = () => {
+            const currentWidth = document.documentElement.scrollWidth;
+            const currentHeight = document.documentElement.scrollHeight;
+            // 检测尺寸是否变化
+            if (currentWidth === lastWidth && currentHeight === lastHeight) {
+                return;
+            }
+            // 如果变化了, 重新初始化水印
+            watermark.init({
+                watermark_txt: '${watermarkTxt}',
+                watermark_x: 0,
+                watermark_y: 0,
+                watermark_rows: 0,
+                watermark_cols: 0,
+                watermark_x_space: ${watermarkXSpace},
+                watermark_y_space: ${watermarkYSpace},
+                watermark_font: '${watermarkFont}',
+                watermark_fontsize: '${watermarkFontsize}',
+                watermark_color: '${watermarkColor}',
+                watermark_alpha: ${watermarkAlpha},
+                watermark_width: ${watermarkWidth},
+                watermark_height: ${watermarkHeight},
+                watermark_angle: ${watermarkAngle},
+                watermark_parent_node:'menus'
+            });
+            // 更新存储的宽口大小
+            lastWidth = currentWidth;
+            lastHeight = currentHeight;
+        };
+        setInterval(checkResize, 1000);
+    }
+</script>
 <script>
     var settings = {
         data: {
@@ -93,7 +136,7 @@ var keyword = getQueryParam(currentUrl, 'extra');
         });
     });
         window.onload = function () {
-        // initWaterMark();
+        initWaterMarkThisPage();
     }
 </script>
 </body>
