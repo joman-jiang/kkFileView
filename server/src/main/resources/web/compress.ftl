@@ -31,9 +31,17 @@
     </style>
 </head>
 <body>
-<div class="zTreeDemoBackground left">
-<#--<h1>kkFileView</h1>-->
-    <ul id="treeDemo" class="ztree"></ul>
+<div style="display: flex;width: 100%;height: 100%;overflow: hidden">
+    <div class="zTreeDemoBackground left" style="flex: 1;width: 100%">
+        <#--<h1>kkFileView</h1>-->
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+    <iframe
+            id="inlineFrame"
+            title="inlineFrame"
+            style="flex: 4;width: 100%;height: 100%"
+            src="">
+    </iframe>
 </div>
 <script>
     var settings = {
@@ -58,15 +66,19 @@ function getQueryParam(url, param) {
   return urlObj.searchParams.get(param);
 }
 var currentUrl = window.location.href;
-var keyword = getQueryParam(currentUrl, 'watermarkTxt');
+var keyword = getQueryParam(currentUrl, 'extra');
     function chooseNode(event, treeId, treeNode) {
         if (!treeNode.isParent) {
             var path = '${baseUrl}'+treeNode.id+"?kkCompressfileKey="+'${fileTree}'+"&kkCompressfilepath="+encodeURIComponent(treeNode.id)+"&fullfilename="+encodeURIComponent(treeNode.name);
-           if (isNotEmpty(keyword)){
-             location.href = "${baseUrl}onlinePreview?url=" + encodeURIComponent(Base64.encode(path))+"&watermarkTxt="+keyword;
-           }else{
-             location.href = "${baseUrl}onlinePreview?url=" + encodeURIComponent(Base64.encode(path));}
-         
+            var url = "";
+            if (keyword){
+                url = "${baseUrl}onlinePreview?url=" + encodeURIComponent(Base64.encode(path))+"&extra="+keyword;
+            }else{
+                url = "${baseUrl}onlinePreview?url=" + encodeURIComponent(Base64.encode(path));
+            }
+            if(url){
+                $('#inlineFrame').attr('src', url);
+            }
         }
     }
     $(document).ready(function () {
@@ -81,7 +93,7 @@ var keyword = getQueryParam(currentUrl, 'watermarkTxt');
         });
     });
         window.onload = function () {
-        initWaterMark();
+        // initWaterMark();
     }
 </script>
 </body>
