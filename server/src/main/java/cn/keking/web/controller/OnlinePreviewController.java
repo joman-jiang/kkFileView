@@ -93,7 +93,7 @@ public class OnlinePreviewController {
         return filePreview.filePreviewHandle(fileUrl, model, fileAttribute);  //统一在这里处理 url
     }
 
-//    @GetMapping( "/picturesPreview")
+    @GetMapping( "/picturesPreview")
     public String picturesPreview(String urls, Model model, HttpServletRequest req) {
         String fileUrls;
         try {
@@ -127,7 +127,7 @@ public class OnlinePreviewController {
      * @param urlPath  url
      * @param response response
      */
-//    @GetMapping("/getCorsFile")
+    @GetMapping("/getCorsFile")
     public void getCorsFile(String urlPath, HttpServletResponse response,FileAttribute fileAttribute) throws IOException {
         URL url;
         try {
