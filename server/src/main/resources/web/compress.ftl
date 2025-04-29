@@ -30,9 +30,9 @@
        
     </style>
 </head>
-<body>
-<div style="display: flex;width: 100%;height: 100%;overflow: hidden">
-    <div id="menus" class="zTreeDemoBackground left" style="flex: 1;width: 100%">
+<body style="overflow: hidden">
+<div style="display: flex;width: 100%;height: 100%;">
+    <div id="menus" class="zTreeDemoBackground left" style="flex: 1;width: 100%;overflow: auto">
         <#--<h1>kkFileView</h1>-->
         <ul id="treeDemo" class="ztree"></ul>
     </div>
