@@ -7,7 +7,6 @@ import cn.keking.service.cache.CacheService;
 import cn.keking.service.cache.NotResourceCache;
 import cn.keking.utils.EncodingDetects;
 import cn.keking.utils.KkFileUtils;
-import cn.keking.utils.UrlEncoderUtils;
 import cn.keking.utils.WebUtils;
 import cn.keking.web.filter.BaseUrlFilter;
 import com.aspose.cad.*;
@@ -485,15 +484,16 @@ public class FileHandlerService implements InitializingBean {
                 e.printStackTrace();
             }
         }
-        if (UrlEncoderUtils.hasUrlEncoded(originFileName)) {  //判断文件名是否转义
-            try {
-                originFileName = URLDecoder.decode(originFileName, uriEncoding);  //转义的文件名 解下出原始文件名
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }else {
-            url = WebUtils.encodeUrlFileName(url); //对未转义的url进行转义
-        }
+        // 默认不存在需要转义的文件名称，如https://xx/文件.zip  2025-04-29 joman jiang
+//        if (UrlEncoderUtils.hasUrlEncoded(originFileName)) {  //判断文件名是否转义
+//            try {
+//                originFileName = URLDecoder.decode(originFileName, uriEncoding);  //转义的文件名 解下出原始文件名
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//        }else {
+//            url = WebUtils.encodeUrlFileName(url); //对未转义的url进行转义
+//        }
         originFileName = KkFileUtils.htmlEscape(originFileName);  //文件名处理
         boolean isHtmlView = suffix.equalsIgnoreCase("xls") || suffix.equalsIgnoreCase("xlsx") || suffix.equalsIgnoreCase("csv") || suffix.equalsIgnoreCase("xlsm") || suffix.equalsIgnoreCase("xlt") || suffix.equalsIgnoreCase("xltm") || suffix.equalsIgnoreCase("et") || suffix.equalsIgnoreCase("ett") || suffix.equalsIgnoreCase("xlam");
         String cacheFilePrefixName = null;
