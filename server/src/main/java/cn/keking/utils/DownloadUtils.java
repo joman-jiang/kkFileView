@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
@@ -106,12 +105,7 @@ public class DownloadUtils {
                         }
                     };
                     try {
-                        // 解决可能存在对url进行多重编码
-                        String urlString = url.toString();
-                        urlString = URLDecoder.decode(urlString, "UTF-8");
-                        urlString = URLDecoder.decode(urlString, "UTF-8");
-                        urlString = URLDecoder.decode(urlString, "UTF-8");
-                        restTemplate.execute(urlString, HttpMethod.GET, requestCallback, fileResponse -> {
+                        restTemplate.execute(url.toURI(), HttpMethod.GET, requestCallback, fileResponse -> {
                             FileUtils.copyToFile(fileResponse.getBody(), realFile);
                             return null;
                         });
